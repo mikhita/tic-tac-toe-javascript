@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index2.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <script src="index.js" defer></script>
+  <title>Frontend Mentor | Tic Tac Toe</title>
+</head>
+<body>
+    <div id="mainDiv">
+<header><div class="xoImage"><img src="./assets/icon-x.svg" alt=""> <img src="./assets/icon-o.svg" alt=""> </div>
+<div class="xTurn"><img id="xTurn" src="./assets/Combined Shape Copy 2.png" alt=""> <p>turn</p> </div>
+<div class="restrDiv"><img class="restartimg" src="./assets/icon-restart.svg" alt=""></div>
+</header>
+<div class="parent">
+    <div class="xAndODiv"></div>
+    <div class="xAndODiv"></div>
+    <div class="xAndODiv"></div>
+    <div class="xAndODiv"></div>
+    <div class="xAndODiv"></div>
+    <div class="xAndODiv"></div>
+    <div class="xAndODiv"></div>
+    <div class="xAndODiv"></div>
+    <div class="xAndODiv"></div>
+  </div>
+  <img class="xFordIV" src="./assets/x for div.png" alt="">
+  <div class="lastBigDivSolo">
+    <div id="xYouDi" class="lastDivCounter"> <p class="counterText "> <span id="spanX">X</span><span class="youSpan">(You)</span></p> <div class="counterDivX"></div> </div>
+    <div id="TiesDi" class="lastDivCounter"> <p class="counterText">Ties </p> <div class="counterDivTies"></div> </div>
+    <div id="xCpuDi" class="lastDivCounter"> <p class="counterText"><span id="spanO">O</span><span class="cpuSpan">(CPU)</span> </p> <div class="counterDivXcpu"></div> </div>
+  </div>
+
+<div class="lastDivMultiplayer">
+    <div id="xYouDiv" class="lastDivCounter"> <p class="counterText xInp2">X <span id="p1Span">(P2)</span></p> <div class="counterDiv"></div> </div>
+    <div id="TiesDiv" class="lastDivCounter"> <p class="counterText">Ties </p> <div class="counterDivTie"></div> </div>
+    <div id="xCpuDiv" class="lastDivCounter"> <p class="counterText oInp1">O <span id="p2Span">(P1)</span></p> <div class="counterDivXcp"></div> </div>
+</div>
+<div class="ohNoYouLost">
+ <p class="ohNoText">Oh no, you lost</p>
+ <div class="OTakesRound"> <img class="ohNoYouLostOImg" src="./assets/icon-o.svg" alt=""> 
+    <p class="OtakesRoundText">TAKES THE ROUND</p></div>
+    <div class="QuitAndContiniueBottons">
+        <button class="QuitButton">QUIT</button>
+        <button class="NEXTROUND">NEXT ROUND</button>
+    </div>
+</div>
+<div class="youWonDiv">
+    <p class="ohNoText">YOU WON!</p>
+    <div class="OTakesRound"> <img class="ohNoYouLostOImg" src="./assets/icon-x.svg" alt=""> 
+       <p class="XtakesRoundText">TAKES THE ROUND</p></div>
+       <div class="QuitAndContiniueBottons">
+           <button class="QuitButton">QUIT</button>
+           <button class="NEXTROUND">NEXT ROUND</button>
+       </div>
+   </div>
+   <div class="restartGame">
+    <div class="restartGameDiv"> 
+       <p class="restartGameText">RESTART GAME?</p></div>
+       <div class="restartGameBottoms">
+           <button class="QuitButton">QUIT</button>
+           <button class="NEXTROUND">NEXT ROUND</button>
+       </div>
+   </div>
+   <div class="player1Wins">
+    <p class="ohNoText">PLAYER 1 WINS!</p>
+    <div class="OTakesRound"> <img class="ohNoYouLostOImg" src="./assets/icon-x.svg" alt=""> 
+       <p class=XtakesRoundText>TAKES THE ROUND</p></div>
+       <div class="QuitAndContiniueBottons">
+           <button class="QuitButton">QUIT</button>
+           <button class="NEXTROUND">NEXT ROUND</button>
+       </div>
+   </div>
+   <div class="player2Wins">
+    <p class="ohNoText">PLAYER 2 WINS!</p>
+    <div class="OTakesRound"> <img class="ohNoYouLostOImg" src="./assets/icon-x.svg" alt=""> 
+       <p class="XtakesRoundText">TAKES THE ROUND</p></div>
+       <div class="QuitAndContiniueBottons">
+           <button class="QuitButton">QUIT</button>
+           <button class="NEXTROUND">NEXT ROUND</button>
+       </div>
+   </div>
+   <div class="tiedGame">
+    <div class="restartGameDiv"> 
+       <p class="restartGameText">ROUND TIED</p></div>
+       <div class="restartGameBottoms">
+           <button class="QuitButton">QUIT</button>
+           <button class="NEXTROUND">NEXT ROUND</button>
+       </div>
+   </div>
+</div>
+
+   <div id="newGameDivStart">
+    <!-- New game menu start -->
+  <div class="xoImage1"><img src="./assets/icon-x.svg" alt=""> <img src="./assets/icon-o.svg" alt=""> </div>
+  <div class="pickUpPlayerToStart">
+    <p class="pickUp1sMark">Pick player 1's mark</p>
+    <div class="pickUpXorO"> <div class="xWhite"><img src="./assets/Combined Shape Copy 2.png" alt=""></div> 
+     <div class="oDarkImg"><img src="./assets/Oval Copy.png" alt=""></div> </div>
+      <p class="rememberFirst">Remember: X goes first</p>
+  </div>
+   <button class="NGvsCPU">New Game (vs CPU)</button>
+  <button class="ngvsPlayer"> New Game (vs player)</button>
+  </div>
+</body>
+</html>
