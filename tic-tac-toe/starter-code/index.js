@@ -5,6 +5,7 @@ let ngvsPlayer = document.getElementsByClassName("ngvsPlayer")[0];
 let divNgvsPlayer = document.getElementsByClassName("lastDivMultiplayer")[0];
 let divNgvsCpu = document.getElementsByClassName("lastBigDivSolo")[0];
 let xTurn = document.getElementById("xTurn");
+let oTurn = document.getElementById("oTurn");
 let restartSquare = document.getElementsByClassName("restartimg")[0];
 let parentDiv = document.getElementsByClassName("parent")[0];
 let counterDivX = document.getElementsByClassName("counterDivX")[0];
@@ -33,12 +34,16 @@ let player1Wins = document.getElementsByClassName("player1Wins")[0];
 let XtakesRoundText = document.getElementsByClassName("XtakesRoundText")[0];
 let player2Wins = document.getElementsByClassName("player2Wins")[0];
 let gameMode = "CPU";
-let gameModeO = "CPUO"
 let ohNoText = document.getElementsByClassName("ohNoText")[0];
+let ohNoyouLostId = document.getElementById("ohNoyouLostId");
 let playerChoise = " ";
+let ohNoyoulostIdFirst = document.getElementById("ohNoyoulostIdFirst");
+let tiedGame = document.getElementsByClassName("tiedGame")[0];
+let checkTiedTruth = false;
+let parents = document.querySelectorAll(".xAndODiv");
+let boxCounter = 0;
 
-
-
+oTurn.style.display = "none";
 counterDivX.innerHTML = '0';
 counterDivTies.innerHTML = '0';
 counterDivXcpu.innerHTML = '0';
@@ -46,8 +51,16 @@ counterDiv.innerHTML = '0';
 counterDivTie.innerHTML = '0'
 counterDivXcp.innerHTML = '0'
 
-
-
+function test(event){
+    
+        if(count%2 == 0){
+            event.target.classList.add("tictacDivs")
+        } else{
+            event.target.classList.add("tictacDivsO");
+        }
+    
+    console.log(count);
+}
 
 
 
@@ -55,7 +68,7 @@ nGvsCPU.addEventListener('click', function (event) {
     newGAmeDiv.style.display = "none";
     maindDiv.style.display = "flex";
     gameMode = "CPU"
-    gameModeO = "CPUO"
+    
 
 });
 
@@ -65,7 +78,7 @@ ngvsPlayer.addEventListener('click', function (event) {
     divNgvsCpu.style.display = "none";
     divNgvsPlayer.style.display = "flex";
     gameMode = "player"
-    gameModeO = "playerO"
+    
 
     
 });
@@ -76,143 +89,141 @@ oDarkImg.addEventListener('click', function (event) {
     cpuSpan.innerHTML= "(YOU)";
     youSpan.innerHTML= "(CPU)";
     gameModeO = "CPUO";
+    playerChoise = 'O'
+
 });
 
 xWhite.addEventListener('click', function (event) {
     p1Span.innerHTML = "(P1)";
     p2Span.innerHTML = "(P2)";
+    playerChoise = 'X'
+
 });
 
 let count = 0;
+for(let i=0; i<parents.length; i++){
+    parents[i].onclick =  function (event) {
+        console.log(11);
+        parents[i].onclick=function(){};
+         if(event.target.classList.contains('xAndODiv')){
+             if(count%2 == 0){
+                 event.target.innerHTML = "<img class='ticTAcX' src='./assets/x for div.png'  />  ";
+                 
+                 oTurn.style.display = "block";
+                 xTurn.style.display = "none";
 
-parent.onclick =  function (event) {
+             } else{
+                 event.target.innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
+                 oTurn.style.display = "none";
+                 xTurn.style.display = "block";
+             }
+             
+             count++;
+             checkwinner();
+     
+         }
+         
+}
+}
+function check(){
+    if(playerChoise === 'X'){
+        ohNoYouLost.style.display = "flex";
+        checkTiedTruth = true;
+    }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(p1)" && gameMode!=="CPU"){
+        ohNoYouLost.style.display = "flex";
+        ohNoyoulostIdFirst.innerHTML = "Player 1 WINS!";
+        checkTiedTruth = true;
+    }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(P2)" && gameMode!=="CPU"){
+        ohNoYouLost.style.display = "flex";
+        ohNoyoulostIdFirst.innerHTML = "Player 2 WINS!";
+        checkTiedTruth = true;
+    }else  if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(YOU)" && gameMode =="CPU" ) {
+        ohNoYouLost.style.display = "flex";
+        ohNoText.innerHTML = "YOU WON!";
+        checkTiedTruth = true;
+    } 
     
-    if(event.target.className == 'xAndODiv'){
-        if(count%2 == 0){
-            event.target.innerHTML = "<img class='ticTAcX' src='./assets/x for div.png'  />  ";
-        } else{
-            event.target.innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
-        }
-        count++;
-        checkwinner();
+    
+    
+}
 
+function checkwinnerXPlayer(){
+    if(spanX.innerHTML == "X" && youSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
+        if (playerChoise === 'O') {
+            youWonDiv.style.display = "flex"; 
+            ohNoyouLostId.innerHTML = "OH NO, YOU LOST...";
+            checkTiedTruth = true;
+        } 
+    } else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(P1)" && gameMode!=="CPU"){
+        player1Wins.style.display = "flex";
+        checkTiedTruth = true;
+
+    }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
+        player2Wins.style.display = "flex";
+        checkTiedTruth = true;
+    }else if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
+        youWonDiv.style.display = "flex"; 
+        checkTiedTruth = true;  
     }
-    
-};
+   
+   
 
+}
+console.log(parents.length);
+
+function checkTiedGame(){
+    let counter = 0;
+    for(let i=0; i<=parents.length; i++){
+        if(parents[i]?.innerHTML !== "" ){
+            counter++;
+            
+        
+        }
+        if(counter===10 && checkTiedTruth === false ){
+            tiedGame.style.display = "flex";
+        }
+    }
+}
 function checkwinner(){
-    
+    checkTiedGame();
     
     if(xAndODiv[0].firstChild?.className == "ticTAcX" && xAndODiv[1].firstChild?.className == "ticTAcX"
         && xAndODiv[2].firstChild?.className == "ticTAcX" ){
-            if(spanX.innerHTML == "X" && youSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
-
+            checkwinnerXPlayer();
     }
     
     if(xAndODiv[3].firstChild?.className == "ticTAcX" && xAndODiv[4].firstChild?.className == "ticTAcX"
         && xAndODiv[5].firstChild?.className == "ticTAcX" ){
-            if(spanX.innerHTML == "X" && youSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            checkwinnerXPlayer();
         }
     if(xAndODiv[6].firstChild?.className == "ticTAcX" && xAndODiv[7].firstChild?.className == "ticTAcX"
          && xAndODiv[8].firstChild?.className == "ticTAcX" ){
-            if(spanX.innerHTML == "X" && youSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            checkwinnerXPlayer();
     }
     if(xAndODiv[0].firstChild?.className == "ticTAcX" && xAndODiv[3].firstChild?.className == "ticTAcX"
         && xAndODiv[6].firstChild?.className == "ticTAcX" ){
-            if(spanX.innerHTML == "X" && youSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            checkwinnerXPlayer();
     }
     if(xAndODiv[1].firstChild?.className == "ticTAcX" && xAndODiv[4].firstChild?.className == "ticTAcX"
         && xAndODiv[7].firstChild?.className == "ticTAcX" ){
-            if(spanX.innerHTML == "X" && youSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            checkwinnerXPlayer();
     }         
     if(xAndODiv[2].firstChild?.className == "ticTAcX" && xAndODiv[5].firstChild?.className == "ticTAcX"
         && xAndODiv[8].firstChild?.className == "ticTAcX" ){
-            if(spanX.innerHTML == "X" && youSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            checkwinnerXPlayer();
     } 
     if(xAndODiv[0].firstChild?.className == "ticTAcX" && xAndODiv[4].firstChild?.className == "ticTAcX"
         && xAndODiv[8].firstChild?.className == "ticTAcX" ){
-            if(spanX.innerHTML == "X" && youSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            checkwinnerXPlayer();
     }
     if(xAndODiv[2].firstChild?.className == "ticTAcX" && xAndODiv[4].firstChild?.className == "ticTAcX"
         && xAndODiv[6].firstChild?.className == "ticTAcX" ){
-            if(spanX.innerHTML == "X" && youSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            checkwinnerXPlayer();
     }  
 
 
-console.log(spanO);
-console.log(cpuSpan);
+// console.log(spanO);
+// console.log(cpuSpan);
 
 
 
@@ -221,120 +232,35 @@ console.log(cpuSpan);
 
     if(xAndODiv[0].firstChild?.className == "ticTacO" && xAndODiv[1].firstChild?.className == "ticTacO"
         && xAndODiv[2].firstChild?.className == "ticTacO" ){
-            
-    if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(CPU)" && gameMode =="CPU" && gameModeO == "CPUO" ){
-                player1Wins.style.display = "flex";
-                
-                
-            } else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(p1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(P2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(YOU)" && gameMode =="CPU" ) {
-                ohNoYouLost.style.display = "flex";
-                ohNoText.innerHTML = "YOU WON!";
-
-            }
-
+            check();
     }
     
     if(xAndODiv[3].firstChild?.className == "ticTacO" && xAndODiv[4].firstChild?.className == "ticTacO"
         && xAndODiv[5].firstChild?.className == "ticTacO" ){
-            if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            check();
         }
     if(xAndODiv[6].firstChild?.className == "ticTacO" && xAndODiv[7].firstChild?.className == "ticTacO"
          && xAndODiv[8].firstChild?.className == "ticTacO" ){
-            if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            check();
     }
     if(xAndODiv[0].firstChild?.className == "ticTacO" && xAndODiv[3].firstChild?.className == "ticTacO"
         && xAndODiv[6].firstChild?.className == "ticTacO" ){
-            if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            check();
     }
     if(xAndODiv[1].firstChild?.className == "ticTacO" && xAndODiv[4].firstChild?.className == "ticTacO"
         && xAndODiv[7].firstChild?.className == "ticTacO" ){
-            if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            check();
     }         
     if(xAndODiv[2].firstChild?.className == "ticTacO" && xAndODiv[5].firstChild?.className == "ticTacO"
         && xAndODiv[8].firstChild?.className == "ticTacO" ){
-            if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            check();
     } 
     if(xAndODiv[0].firstChild?.className == "ticTacO" && xAndODiv[4].firstChild?.className == "ticTacO"
         && xAndODiv[8].firstChild?.className == "ticTacO" ){
-            if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
+            check();
     }
     if(xAndODiv[2].firstChild?.className == "ticTacO" && xAndODiv[4].firstChild?.className == "ticTacO"
         && xAndODiv[6].firstChild?.className == "ticTacO" ){
-            if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
-                ohNoYouLost.style.display = "flex";
-            } else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(P1)" && gameMode!=="CPU"){
-                player1Wins.style.display = "flex";
-
-            }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(p2)" && gameMode!=="CPU"){
-                player2Wins.style.display = "flex";
-            }else if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
-                youWonDiv.style.display = "flex";   
-            }
-    }  
-    console.log()
-
-       
-
-   
-
-   
-}
+            check();
+    } 
+}    

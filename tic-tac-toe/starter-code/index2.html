@@ -9,21 +9,26 @@
   <title>Frontend Mentor | Tic Tac Toe</title>
 </head>
 <body>
+    
     <div id="mainDiv">
 <header><div class="xoImage"><img src="./assets/icon-x.svg" alt=""> <img src="./assets/icon-o.svg" alt=""> </div>
-<div class="xTurn"><img id="xTurn" src="./assets/Combined Shape Copy 2.png" alt=""> <p>turn</p> </div>
+<div class="xTurn">
+    <img id="xTurn" src="./assets/Combined Shape Copy 2.png" alt=""> 
+    <img id="oTurn" src="./assets/Oval Copy.png" alt=""> 
+    <p>turn</p> 
+</div>
 <div class="restrDiv"><img class="restartimg" src="./assets/icon-restart.svg" alt=""></div>
 </header>
 <div class="parent">
-    <div class="xAndODiv"></div>
-    <div class="xAndODiv"></div>
-    <div class="xAndODiv"></div>
-    <div class="xAndODiv"></div>
-    <div class="xAndODiv"></div>
-    <div class="xAndODiv"></div>
-    <div class="xAndODiv"></div>
-    <div class="xAndODiv"></div>
-    <div class="xAndODiv"></div>
+    <div class="xAndODiv" onmouseover="test(event)"></div>
+    <div class="xAndODiv" onmouseover="test(event)"></div>
+    <div class="xAndODiv" onmouseover="test(event)"></div>
+    <div class="xAndODiv" onmouseover="test(event)"></div>
+    <div class="xAndODiv" onmouseover="test(event)"></div>
+    <div class="xAndODiv" onmouseover="test(event)"></div>
+    <div class="xAndODiv" onmouseover="test(event)"></div>
+    <div class="xAndODiv" onmouseover="test(event)"></div>
+    <div class="xAndODiv" onmouseover="test(event)"></div>
   </div>
   <img class="xFordIV" src="./assets/x for div.png" alt="">
   <div class="lastBigDivSolo">
@@ -38,7 +43,7 @@
     <div id="xCpuDiv" class="lastDivCounter"> <p class="counterText oInp1">O <span id="p2Span">(P1)</span></p> <div class="counterDivXcp"></div> </div>
 </div>
 <div class="ohNoYouLost">
- <p class="ohNoText">Oh no, you lost</p>
+ <p id="ohNoyoulostIdFirst" class="ohNoText">Oh no, you lost</p>
  <div class="OTakesRound"> <img class="ohNoYouLostOImg" src="./assets/icon-o.svg" alt=""> 
     <p class="OtakesRoundText">TAKES THE ROUND</p></div>
     <div class="QuitAndContiniueBottons">
@@ -47,14 +52,14 @@
     </div>
 </div>
 <div class="youWonDiv">
-    <p class="ohNoText">YOU WON!</p>
+    <p id="ohNoyouLostId" class="ohNoText player2For">YOU WON!</p>
     <div class="OTakesRound"> <img class="ohNoYouLostOImg" src="./assets/icon-x.svg" alt=""> 
        <p class="XtakesRoundText">TAKES THE ROUND</p></div>
        <div class="QuitAndContiniueBottons">
            <button class="QuitButton">QUIT</button>
            <button class="NEXTROUND">NEXT ROUND</button>
        </div>
-   </div>
+</div>
    <div class="restartGame">
     <div class="restartGameDiv"> 
        <p class="restartGameText">RESTART GAME?</p></div>
@@ -97,7 +102,7 @@
   <div class="pickUpPlayerToStart">
     <p class="pickUp1sMark">Pick player 1's mark</p>
     <div class="pickUpXorO"> <div class="xWhite"><img src="./assets/Combined Shape Copy 2.png" alt=""></div> 
-     <div class="oDarkImg"><img src="./assets/Oval Copy.png" alt=""></div> </div>
+     <div class="oDarkImg"><img src="./assets/Oval Cy (1).png" alt=""></div> </div>
       <p class="rememberFirst">Remember: X goes first</p>
   </div>
    <button class="NGvsCPU">New Game (vs CPU)</button>
