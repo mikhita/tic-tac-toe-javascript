@@ -42,6 +42,8 @@ let tiedGame = document.getElementsByClassName("tiedGame")[0];
 let checkTiedTruth = false;
 let parents = document.querySelectorAll(".xAndODiv");
 let boxCounter = 0;
+let restrDiv = document.getElementsByClassName("restrDiv")[0];
+
 
 let arr = [0,1,2,3,4,5,6,7,8];
 function findFilledBoxes(number){
@@ -82,8 +84,12 @@ function test(event){
     
    
 }
-
-
+restrDiv.addEventListener('click', function (event) {
+    for(let i=0; i<parents.length; i++){
+        parents[i].innerHTML = "";
+    }
+    
+});
 
 nGvsCPU.addEventListener('click', function (event) {
     newGAmeDiv.style.display = "none";
