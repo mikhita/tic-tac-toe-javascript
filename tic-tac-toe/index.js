@@ -51,8 +51,15 @@ function findFilledBoxes(number){
  arr.splice(index,1);
 //  console.log(arr);
 }
+
+
 function autoFill(){
     let randomNumber = arr [Math.floor(Math.random() * arr.length)];
+    // console.log(randomNumber);
+    // console.log(parents);
+    // console.log(arr);
+
+
     parents[randomNumber].innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
     findFilledBoxes(randomNumber);
     count++;
@@ -74,6 +81,24 @@ counterDiv.innerHTML = '0';
 counterDivTie.innerHTML = '0'
 counterDivXcp.innerHTML = '0'
 
+
+function incrementWinner(element){
+    if(element==="X"){
+        let currentCount = parseInt(counterDivX.innerText);
+        counterDivX.innerText = currentCount + 1;
+    } 
+
+    if(element === "O"){
+        let currentCount = parseInt(counterDivXcpu.innerText);
+        counterDivXcpu.innerText = currentCount + 1;
+    }
+
+    if(element === "TIE"){
+        let currentCount = parseInt(counterDivTies.innerText);
+        counterDivTies.innerText = currentCount + 1;
+    }
+}
+
 function test(event){
     
         if(count%2 == 0){
@@ -88,6 +113,7 @@ restrDiv.addEventListener('click', function (event) {
     for(let i=0; i<parents.length; i++){
         parents[i].innerHTML = "";
     }
+    arr = [0,1,2,3,4,5,6,7,8];
     
 });
 
@@ -95,7 +121,7 @@ nGvsCPU.addEventListener('click', function (event) {
     newGAmeDiv.style.display = "none";
     maindDiv.style.display = "flex";
     gameMode = "CPU"
-    if(playerChoise === 'O'){
+    if(playerChoise === 'O' ){
     autoFillO();}
 
 });
@@ -131,18 +157,20 @@ xWhite.addEventListener('click', function (event) {
 let count = 0;
 for(let i=0; i<parents.length; i++){
     parents[i].onclick =  function (event) {
-        // console.log(event.target.getAttribute("rameErqvas"));
-         parents[i].onclick=function(){};
+        // console.log(event.target.childNodes);
+        
+         if(event.target.childNodes.length !==2 ) {
+
+         
          if(event.target.classList.contains('xAndODiv')){
              if(count%2 == 0){
              event.target.innerHTML = "<img class='ticTAcX' src='./assets/x for div.png'  />  ";
                 oTurn.style.display = "block";
                 xTurn.style.display = "none";
                 findFilledBoxes(event.target.getAttribute("rameErqvas"));
-                if(gameMode === "CPU" && playerChoise === 'X'){
+                if(gameMode === "CPU" && playerChoise === 'X' && arr.length !== 0){
                    
                     autoFill();
-                    
                   
                 }
                 
@@ -151,11 +179,10 @@ for(let i=0; i<parents.length; i++){
                 oTurn.style.display = "none";
                 xTurn.style.display = "block";
                 findFilledBoxes(event.target.getAttribute("rameErqvas"));
-                if(gameMode === "CPU" && playerChoise === 'O'){
+                if(gameMode === "CPU" && playerChoise === 'O' && arr.length !== 0){
                    
                     autoFillO();
-                    
-                  
+
                 }
             }
                  
@@ -165,6 +192,8 @@ for(let i=0; i<parents.length; i++){
              checkwinner();
      
          }
+        }
+    
          
     }
 
@@ -200,17 +229,24 @@ function checkwinnerXPlayer(){
             youWonDiv.style.display = "flex"; 
             ohNoyouLostId.innerHTML = "OH NO, YOU LOST...";
             checkTiedTruth = true;
+            incrementWinner("X");
         } 
     } else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(P1)" && gameMode!=="CPU"){
         player1Wins.style.display = "flex";
         checkTiedTruth = true;
+        incrementWinner("X");
+
 
     }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
         player2Wins.style.display = "flex";
         checkTiedTruth = true;
+        incrementWinner("X");
+
     }else if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU" ) {
         youWonDiv.style.display = "flex"; 
         checkTiedTruth = true;  
+        incrementWinner("X");
+
     }
    
    
@@ -220,15 +256,13 @@ function checkwinnerXPlayer(){
 
 function checkTiedGame(){
     let counter = 0;
-    for(let i=0; i<=parents.length; i++){
+    for(let i=0; i<parents.length; i++){
         if(parents[i]?.innerHTML !== "" ){
             counter++;
-            
-        
         }
-        if(counter===10 && checkTiedTruth === false ){
-            tiedGame.style.display = "flex";
-        }
+    }
+    if(counter===9 && checkTiedTruth === false ){
+        tiedGame.style.display = "flex";
     }
 }
 function checkwinner(){
