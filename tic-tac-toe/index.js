@@ -95,6 +95,8 @@ nGvsCPU.addEventListener('click', function (event) {
     newGAmeDiv.style.display = "none";
     maindDiv.style.display = "flex";
     gameMode = "CPU"
+    if(playerChoise === 'O'){
+    autoFillO();}
 
 });
 
@@ -104,6 +106,7 @@ ngvsPlayer.addEventListener('click', function (event) {
     divNgvsCpu.style.display = "none";
     divNgvsPlayer.style.display = "flex";
     gameMode = "player"
+    
     
 
     
@@ -115,7 +118,7 @@ oDarkImg.addEventListener('click', function (event) {
     cpuSpan.innerHTML= "(YOU)";
     youSpan.innerHTML= "(CPU)";
     playerChoise = 'O'
-    autoFillO();
+    
 });
 
 xWhite.addEventListener('click', function (event) {
