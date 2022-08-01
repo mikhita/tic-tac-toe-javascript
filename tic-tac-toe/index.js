@@ -217,7 +217,7 @@ for(let i=0; i<parents.length; i++){
 
 
 
-function check(){
+function check(index1,index2,index3){
     if(playerChoise === 'X'){
         ohNoYouLost.style.display = "flex";
         checkTiedTruth = true;
@@ -238,12 +238,17 @@ function check(){
         checkTiedTruth = true;
         incrementWinner("O");
     } 
-    
+    parents[index1].classList.add("ooo");
+   parents[index2].classList.add("ooo");
+   parents[index3].classList.add("ooo");
+   parents[index1].querySelector(".ticTacO").remove()
+   parents[index2].querySelector(".ticTacO").remove()
+   parents[index3].querySelector(".ticTacO").remove()
     
     
 }
 
-function checkwinnerXPlayer(){
+function checkwinnerXPlayer(index1,index2,index3){
     if(spanX.innerHTML == "X" && youSpan.innerHTML == "(CPU)" && gameMode =="CPU"){
         if (playerChoise === 'O') {
             youWonDiv.style.display = "flex"; 
@@ -268,8 +273,12 @@ function checkwinnerXPlayer(){
         incrementWinner("X");
 
     }
-   
-   
+   parents[index1].classList.add("xxx")
+   parents[index2].classList.add("xxx")
+   parents[index3].classList.add("xxx")
+   parents[index1].querySelector(".ticTAcX").remove()
+   parents[index2].querySelector(".ticTAcX").remove()
+   parents[index3].querySelector(".ticTAcX").remove()
 
 }
 // console.log(parents.length);
@@ -292,43 +301,44 @@ function checkwinner(){
     if(xAndODiv[0].firstChild?.classList.contains("ticTAcX") 
         && xAndODiv[1].firstChild?.classList.contains("ticTAcX")
         && xAndODiv[2].firstChild?.classList.contains("ticTAcX") ){
-            checkwinnerXPlayer();
+            checkwinnerXPlayer(0,1,2);
+
     }
     
     if(xAndODiv[3].firstChild?.classList.contains("ticTAcX") 
         && xAndODiv[4].firstChild?.classList.contains("ticTAcX")
         && xAndODiv[5].firstChild?.classList.contains("ticTAcX") ){
-            checkwinnerXPlayer();
+            checkwinnerXPlayer(3,4,5);
         }
     if(xAndODiv[6].firstChild?.classList.contains("ticTAcX") 
         && xAndODiv[7].firstChild?.classList.contains("ticTAcX")
          && xAndODiv[8].firstChild?.classList.contains("ticTAcX") ){
-            checkwinnerXPlayer();
+            checkwinnerXPlayer(6,7,8);
     }
     if(xAndODiv[0].firstChild?.classList.contains("ticTAcX") 
         && xAndODiv[3].firstChild?.classList.contains("ticTAcX")
         && xAndODiv[6].firstChild?.classList.contains("ticTAcX") ){
-            checkwinnerXPlayer();
+            checkwinnerXPlayer(0,3,6);
     }
     if(xAndODiv[1].firstChild?.classList.contains("ticTAcX") 
         && xAndODiv[4].firstChild?.classList.contains("ticTAcX")
         && xAndODiv[7].firstChild?.classList.contains("ticTAcX") ){
-            checkwinnerXPlayer();
+            checkwinnerXPlayer(1,4,7);
     }         
     if(xAndODiv[2].firstChild?.classList.contains("ticTAcX") 
         && xAndODiv[5].firstChild?.classList.contains("ticTAcX")
         && xAndODiv[8].firstChild?.classList.contains("ticTAcX") ){
-            checkwinnerXPlayer();
+            checkwinnerXPlayer(2,5,8);
     } 
     if(xAndODiv[0].firstChild?.classList.contains("ticTAcX") 
         && xAndODiv[4].firstChild?.classList.contains("ticTAcX")
         && xAndODiv[8].firstChild?.classList.contains("ticTAcX") ){
-            checkwinnerXPlayer();
+            checkwinnerXPlayer(0,4,8);
     }
     if(xAndODiv[2].firstChild?.classList.contains("ticTAcX")   
         && xAndODiv[4].firstChild?.classList.contains("ticTAcX")
         && xAndODiv[6].firstChild?.classList.contains("ticTAcX") ){
-            checkwinnerXPlayer();
+            checkwinnerXPlayer(2,4,6);
     }  
 
 
@@ -337,43 +347,43 @@ function checkwinner(){
     if(xAndODiv[0].firstChild?.classList.contains("ticTacO") 
         && xAndODiv[1].firstChild?.classList.contains("ticTacO")
         && xAndODiv[2].firstChild?.classList.contains("ticTacO") ){
-            check();
+            check(0,1,2);
     }
     
     if(xAndODiv[3].firstChild?.classList.contains("ticTacO") 
         && xAndODiv[4].firstChild?.classList.contains("ticTacO")
         && xAndODiv[5].firstChild?.classList.contains("ticTacO") ){
-            check();
+            check(3,4,5);
         }
     if(xAndODiv[6].firstChild?.classList.contains("ticTacO") 
         && xAndODiv[7].firstChild?.classList.contains("ticTacO")
          && xAndODiv[8].firstChild?.classList.contains("ticTacO") ){
-            check();
+            check(6,7,8);
     }
     if(xAndODiv[0].firstChild?.classList.contains("ticTacO") 
         && xAndODiv[3].firstChild?.classList.contains("ticTacO")
         && xAndODiv[6].firstChild?.classList.contains("ticTacO") ){
-            check();
+            check(0,3,6);
     }
     if(xAndODiv[1].firstChild?.classList.contains("ticTacO") 
         && xAndODiv[4].firstChild?.classList.contains("ticTacO")
         && xAndODiv[7].firstChild?.classList.contains("ticTacO") ){
-            check();
+            check(1,4,7);
     }         
     if(xAndODiv[2].firstChild?.classList.contains("ticTacO") 
         && xAndODiv[5].firstChild?.classList.contains("ticTacO")
         && xAndODiv[8].firstChild?.classList.contains("ticTacO") ){
-            check();
+            check(2,5,8);
     } 
     if(xAndODiv[0].firstChild?.classList.contains("ticTacO") 
         && xAndODiv[4].firstChild?.classList.contains("ticTacO")
         && xAndODiv[8].firstChild?.classList.contains("ticTacO") ){
-            check();
+            check(0,4,8);
     }
     if(xAndODiv[2].firstChild?.classList.contains("ticTacO") 
         && xAndODiv[4].firstChild?.classList.contains("ticTacO")
         && xAndODiv[6].firstChild?.classList.contains("ticTacO") ){
-            check();
+            check(2,4,6);
     } 
     checkTiedGame();
 }    

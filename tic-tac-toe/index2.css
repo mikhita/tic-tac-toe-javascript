@@ -12,6 +12,18 @@ body{
     align-items: center;
     padding: 24px 23px 176px 23px;
 }
+.xxx{
+    background-color: #65E9E4 !important;
+    background-image: url(./assets/black-x.png) !important;
+    background-position: 50% 50% !important;
+    background-repeat: no-repeat !important; 
+}
+.ooo{
+    background-color: #FFC860 !important;
+    background-image: url(./assets/oval-o.png) !important;
+    background-position: 50% 50% !important;
+    background-repeat: no-repeat !important;
+}
 .xAndODiv{
     text-align: center;
     font-size: 50px;
