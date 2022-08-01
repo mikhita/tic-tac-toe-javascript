@@ -43,7 +43,7 @@ let checkTiedTruth = false;
 let parents = document.querySelectorAll(".xAndODiv");
 let boxCounter = 0;
 let restrDiv = document.getElementsByClassName("restrDiv")[0];
-
+let rameErqvas = document.getElementsByTagName("rameErqvas");
 
 let arr = [0,1,2,3,4,5,6,7,8];
 function findFilledBoxes(number){
@@ -63,12 +63,14 @@ function autoFill(){
     parents[randomNumber].innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
     findFilledBoxes(randomNumber);
     count++;
+    hoverForDivs();
 }
 function autoFillO(){
     let randomNumber = arr [Math.floor(Math.random() * arr.length)];
     parents[randomNumber].innerHTML = "<img class='ticTAcX' src='./assets/x for div.png'  />  ";
     findFilledBoxes(randomNumber);
     count++;
+    hoverForDivs();
 }
 
 
@@ -82,33 +84,55 @@ counterDivTie.innerHTML = '0'
 counterDivXcp.innerHTML = '0'
 
 
+function hoverForDivs(){
+    for(let i=0; i<parents.length; i++){
+        if(count%2 == 0){
+            if(arr.includes(i)){
+                parents[i].classList.add("tictacDivs");
+            }
+            
+            parents[i].classList.remove("tictacDivsO");
+            oTurn.style.display = "none";
+            xTurn.style.display = "block";
+        } else{
+            if(arr.includes(i)){
+                parents[i].classList.add("tictacDivsO");
+            }
+            
+            parents[i].classList.remove("tictacDivs");
+            oTurn.style.display = "block";
+            xTurn.style.display = "none";
+        }
+    }
+}
+
 function incrementWinner(element){
     if(element==="X"){
         let currentCount = parseInt(counterDivX.innerText);
         counterDivX.innerText = currentCount + 1;
+        let currentCounts = parseInt(counterDiv.innerText);
+        counterDiv.innerText = currentCounts + 1;
     } 
 
     if(element === "O"){
         let currentCount = parseInt(counterDivXcpu.innerText);
         counterDivXcpu.innerText = currentCount + 1;
+        let currentCounts = parseInt(counterDivXcp.innerText);
+        counterDivXcp.innerText = currentCounts + 1;
     }
 
     if(element === "TIE"){
         let currentCount = parseInt(counterDivTies.innerText);
         counterDivTies.innerText = currentCount + 1;
+        let currentCounts = parseInt(counterDivTie.innerText);
+        counterDivTie.innerText = currentCounts + 1;
     }
 }
 
-function test(event){
-    
-        if(count%2 == 0){
-            event.target.classList.add("tictacDivs")
-        } else{
-            event.target.classList.add("tictacDivsO");
-        }
+
     
    
-}
+
 restrDiv.addEventListener('click', function (event) {
     for(let i=0; i<parents.length; i++){
         parents[i].innerHTML = "";
@@ -123,7 +147,7 @@ nGvsCPU.addEventListener('click', function (event) {
     gameMode = "CPU"
     if(playerChoise === 'O' ){
     autoFillO();}
-
+    
 });
 
 ngvsPlayer.addEventListener('click', function (event) {
@@ -131,8 +155,8 @@ ngvsPlayer.addEventListener('click', function (event) {
     maindDiv.style.display = "flex";
     divNgvsCpu.style.display = "none";
     divNgvsPlayer.style.display = "flex";
-    gameMode = "player"
-    
+    gameMode = "player";
+    hoverForDivs();
     
 
     
@@ -163,26 +187,18 @@ for(let i=0; i<parents.length; i++){
 
          
          if(event.target.classList.contains('xAndODiv')){
-             if(count%2 == 0){
+             if(count%2 == 0){   
              event.target.innerHTML = "<img class='ticTAcX' src='./assets/x for div.png'  />  ";
-                oTurn.style.display = "block";
-                xTurn.style.display = "none";
                 findFilledBoxes(event.target.getAttribute("rameErqvas"));
-                if(gameMode === "CPU" && playerChoise === 'X' && arr.length !== 0){
-                   
+                if(gameMode === "CPU" && playerChoise === 'X' && arr.length !== 0){ 
                     autoFill();
-                  
                 }
                 
             } else{
                 event.target.innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
-                oTurn.style.display = "none";
-                xTurn.style.display = "block";
                 findFilledBoxes(event.target.getAttribute("rameErqvas"));
-                if(gameMode === "CPU" && playerChoise === 'O' && arr.length !== 0){
-                   
+                if(gameMode === "CPU" && playerChoise === 'O' && arr.length !== 0){ 
                     autoFillO();
-
                 }
             }
                  
@@ -190,7 +206,7 @@ for(let i=0; i<parents.length; i++){
              
              count++;
              checkwinner();
-     
+             hoverForDivs();
          }
         }
     
@@ -205,18 +221,22 @@ function check(){
     if(playerChoise === 'X'){
         ohNoYouLost.style.display = "flex";
         checkTiedTruth = true;
+        incrementWinner("O");
     }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(p1)" && gameMode!=="CPU"){
         ohNoYouLost.style.display = "flex";
         ohNoyoulostIdFirst.innerHTML = "Player 1 WINS!";
         checkTiedTruth = true;
+        incrementWinner("O");
     }else if(spanO.innerHTML == "O" && p2Span.innerHTML == "(P2)" && gameMode!=="CPU"){
         ohNoYouLost.style.display = "flex";
         ohNoyoulostIdFirst.innerHTML = "Player 2 WINS!";
         checkTiedTruth = true;
+        incrementWinner("O");
     }else  if(spanO.innerHTML == "O" && cpuSpan.innerHTML == "(YOU)" && gameMode =="CPU" ) {
         ohNoYouLost.style.display = "flex";
         ohNoText.innerHTML = "YOU WON!";
         checkTiedTruth = true;
+        incrementWinner("O");
     } 
     
     
@@ -263,6 +283,7 @@ function checkTiedGame(){
     }
     if(counter===9 && checkTiedTruth === false ){
         tiedGame.style.display = "flex";
+        incrementWinner("TIE");
     }
 }
 function checkwinner(){
