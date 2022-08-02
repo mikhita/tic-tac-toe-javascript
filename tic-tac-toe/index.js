@@ -44,6 +44,74 @@ let parents = document.querySelectorAll(".xAndODiv");
 let boxCounter = 0;
 let restrDiv = document.getElementsByClassName("restrDiv")[0];
 let rameErqvas = document.getElementsByTagName("rameErqvas");
+let quitButtons = document.querySelectorAll(".QuitButton");
+
+function displayNoneForLongDivs(){
+    ohNoYouLost.style.display = "none";
+    youWonDiv.style.display = "none";
+    player1Wins.style.display = "none";
+    player2Wins.style.display = "none";
+    tiedGame.style.display = "none";
+}
+
+quitButtons.forEach(function(quitButton){
+    quitButton.addEventListener ('click', function (event){
+        newGAmeDiv.style.display = "flex";
+        maindDiv.style.display = "none";
+        for(let i=0; i<parents.length; i++){
+            parents[i].innerHTML = "";
+        }
+        arr = [0,1,2,3,4,5,6,7,8];
+        parents[0].classList.remove("ooo");
+       parents[1].classList.remove("ooo");
+       parents[2].classList.remove("ooo");
+        parents[3].classList.remove("ooo");
+       parents[4].classList.remove("ooo");
+       parents[5].classList.remove("ooo");
+        parents[6].classList.remove("ooo");
+       parents[7].classList.remove("ooo");
+       parents[8].classList.remove("ooo");
+       parents[0].classList.remove("xxx");
+       parents[1].classList.remove("xxx");
+       parents[2].classList.remove("xxx");
+       parents[3].classList.remove("xxx");
+       parents[4].classList.remove("xxx");
+       parents[5].classList.remove("xxx");
+       parents[6].classList.remove("xxx");
+       parents[7].classList.remove("xxx");
+       parents[8].classList.remove("xxx");
+       
+    
+             
+        if(event.target.classList.contains('xAndODiv')){
+            if(count%2 == 0){   
+            event.target.innerHTML = "<img class='ticTAcX' src='./assets/x for div.png'  />  ";
+               findFilledBoxes(event.target.getAttribute("rameErqvas"));
+               if(gameMode === "CPU" && playerChoise === 'X' && arr.length !== 0){ 
+                   autoFill();
+               }
+               
+           } else{
+               event.target.innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
+               findFilledBoxes(event.target.getAttribute("rameErqvas"));
+               if(gameMode === "CPU" && playerChoise === 'O' && arr.length !== 0){ 
+                   autoFillO();
+               }
+           }
+                
+       }
+            if(gameMode === "CPU" && playerChoise !== 'O'){
+                count++;
+            }
+            count++;
+            checkwinner();
+            hoverForDivs();
+
+        
+        displayNoneForLongDivs();
+    
+    });
+});
 
 let arr = [0,1,2,3,4,5,6,7,8];
 function findFilledBoxes(number){
@@ -55,11 +123,6 @@ function findFilledBoxes(number){
 
 function autoFill(){
     let randomNumber = arr [Math.floor(Math.random() * arr.length)];
-    // console.log(randomNumber);
-    // console.log(parents);
-    // console.log(arr);
-
-
     parents[randomNumber].innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
     findFilledBoxes(randomNumber);
     count++;
@@ -137,17 +200,34 @@ restrDiv.addEventListener('click', function (event) {
     for(let i=0; i<parents.length; i++){
         parents[i].innerHTML = "";
     }
-    arr = [0,1,2,3,4,5,6,7,8];
+    arr = [0,1,2,3,4,5,6,7,8]; 
+    
+    
     
 });
 
 nGvsCPU.addEventListener('click', function (event) {
     newGAmeDiv.style.display = "none";
     maindDiv.style.display = "flex";
+   
     gameMode = "CPU"
     if(playerChoise === 'O' ){
     autoFillO();}
     
+
+         
+        if(event.target.classList.contains('xAndODiv')){
+            if(count%2 == 0){   
+                event.target.innerHTML = "<img class='ticTAcX' src='./assets/x for div.png'  />  ";
+                }
+                else{
+                    event.target.innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
+               
+           }
+                
+       }
+            
+          
 });
 
 ngvsPlayer.addEventListener('click', function (event) {
@@ -157,7 +237,23 @@ ngvsPlayer.addEventListener('click', function (event) {
     divNgvsPlayer.style.display = "flex";
     gameMode = "player";
     hoverForDivs();
-    
+    if(event.target.classList.contains('xAndODiv')){
+        if(count%2 == 0){   
+            event.target.innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
+           findFilledBoxes(event.target.getAttribute("rameErqvas"));
+           if(gameMode === "CPU" && playerChoise === 'X' && arr.length !== 0){ 
+               autoFill();
+           }
+           
+       } else{
+        event.target.innerHTML = "<img class='ticTAcX' src='./assets/x for div.png'  />  ";
+           findFilledBoxes(event.target.getAttribute("rameErqvas"));
+           if(gameMode === "CPU" && playerChoise === 'O' && arr.length !== 0){ 
+               autoFillO();
+           }
+       }
+            
+   }
 
     
 });
@@ -174,7 +270,10 @@ oDarkImg.addEventListener('click', function (event) {
 xWhite.addEventListener('click', function (event) {
     p1Span.innerHTML = "(P1)";
     p2Span.innerHTML = "(P2)";
-    playerChoise = 'X'
+    youSpan.innerHTML= "(You)";
+    cpuSpan.innerHTML= "(CPU)"
+    playerChoise = 'X';
+
 
 });
 
@@ -218,6 +317,13 @@ for(let i=0; i<parents.length; i++){
 
 
 function check(index1,index2,index3){
+    if(spanX.innerHTML == "X" && youSpan.innerHTML == "(You)" && gameMode =="CPU"){
+        if(playerChoise === 'X'){
+            ohNoYouLost.style.display = "flex";
+            checkTiedTruth = true;
+            incrementWinner("O");
+        }
+    }
     if(playerChoise === 'X'){
         ohNoYouLost.style.display = "flex";
         checkTiedTruth = true;
@@ -260,6 +366,7 @@ function checkwinnerXPlayer(index1,index2,index3){
         player1Wins.style.display = "flex";
         checkTiedTruth = true;
         incrementWinner("X");
+        
 
 
     }else if(spanX.innerHTML == "X" && p1Span.innerHTML == "(p2)" && gameMode!=="CPU"){
@@ -271,6 +378,8 @@ function checkwinnerXPlayer(index1,index2,index3){
         youWonDiv.style.display = "flex"; 
         checkTiedTruth = true;  
         incrementWinner("X");
+        console.log(12);
+
 
     }
    parents[index1].classList.add("xxx")
@@ -298,91 +407,95 @@ function checkTiedGame(){
 function checkwinner(){
     
     
-    if(xAndODiv[0].firstChild?.classList.contains("ticTAcX") 
-        && xAndODiv[1].firstChild?.classList.contains("ticTAcX")
-        && xAndODiv[2].firstChild?.classList.contains("ticTAcX") ){
+    if(xAndODiv[0].firstChild?.classList?.contains("ticTAcX") 
+        && xAndODiv[1].firstChild?.classList?.contains("ticTAcX")
+        && xAndODiv[2].firstChild?.classList?.contains("ticTAcX") ){
             checkwinnerXPlayer(0,1,2);
 
     }
     
-    if(xAndODiv[3].firstChild?.classList.contains("ticTAcX") 
-        && xAndODiv[4].firstChild?.classList.contains("ticTAcX")
-        && xAndODiv[5].firstChild?.classList.contains("ticTAcX") ){
+    if(xAndODiv[3].firstChild?.classList?.contains("ticTAcX") 
+        && xAndODiv[4].firstChild?.classList?.contains("ticTAcX")
+        && xAndODiv[5].firstChild?.classList?.contains("ticTAcX") ){
             checkwinnerXPlayer(3,4,5);
         }
-    if(xAndODiv[6].firstChild?.classList.contains("ticTAcX") 
-        && xAndODiv[7].firstChild?.classList.contains("ticTAcX")
-         && xAndODiv[8].firstChild?.classList.contains("ticTAcX") ){
+    if(xAndODiv[6].firstChild?.classList?.contains("ticTAcX") 
+        && xAndODiv[7].firstChild?.classList?.contains("ticTAcX")
+         && xAndODiv[8].firstChild?.classList?.contains("ticTAcX") ){
             checkwinnerXPlayer(6,7,8);
     }
-    if(xAndODiv[0].firstChild?.classList.contains("ticTAcX") 
-        && xAndODiv[3].firstChild?.classList.contains("ticTAcX")
-        && xAndODiv[6].firstChild?.classList.contains("ticTAcX") ){
+    
+    if(xAndODiv[0].firstChild?.classList?.contains("ticTAcX") 
+        && xAndODiv[3].firstChild?.classList?.contains("ticTAcX")
+        && xAndODiv[6].firstChild?.classList?.contains("ticTAcX") ){
             checkwinnerXPlayer(0,3,6);
     }
-    if(xAndODiv[1].firstChild?.classList.contains("ticTAcX") 
-        && xAndODiv[4].firstChild?.classList.contains("ticTAcX")
-        && xAndODiv[7].firstChild?.classList.contains("ticTAcX") ){
+    if(xAndODiv[1].firstChild?.classList?.contains("ticTAcX") 
+        && xAndODiv[4].firstChild?.classList?.contains("ticTAcX")
+        && xAndODiv[7].firstChild?.classList?.contains("ticTAcX") ){
             checkwinnerXPlayer(1,4,7);
     }         
-    if(xAndODiv[2].firstChild?.classList.contains("ticTAcX") 
-        && xAndODiv[5].firstChild?.classList.contains("ticTAcX")
-        && xAndODiv[8].firstChild?.classList.contains("ticTAcX") ){
+    if(xAndODiv[2].firstChild?.classList?.contains("ticTAcX") 
+        && xAndODiv[5].firstChild?.classList?.contains("ticTAcX")
+        && xAndODiv[8].firstChild?.classList?.contains("ticTAcX") ){
             checkwinnerXPlayer(2,5,8);
     } 
-    if(xAndODiv[0].firstChild?.classList.contains("ticTAcX") 
-        && xAndODiv[4].firstChild?.classList.contains("ticTAcX")
-        && xAndODiv[8].firstChild?.classList.contains("ticTAcX") ){
+    if(xAndODiv[0].firstChild?.classList?.contains("ticTAcX") 
+        && xAndODiv[4].firstChild?.classList?.contains("ticTAcX")
+        && xAndODiv[8].firstChild?.classList?.contains("ticTAcX") ){
+            console.log(11);
+
             checkwinnerXPlayer(0,4,8);
+            
     }
-    if(xAndODiv[2].firstChild?.classList.contains("ticTAcX")   
-        && xAndODiv[4].firstChild?.classList.contains("ticTAcX")
-        && xAndODiv[6].firstChild?.classList.contains("ticTAcX") ){
+    if(xAndODiv[2].firstChild?.classList?.contains("ticTAcX")   
+        && xAndODiv[4].firstChild?.classList?.contains("ticTAcX")
+        && xAndODiv[6].firstChild?.classList?.contains("ticTAcX") ){
             checkwinnerXPlayer(2,4,6);
     }  
 
 
 
 
-    if(xAndODiv[0].firstChild?.classList.contains("ticTacO") 
-        && xAndODiv[1].firstChild?.classList.contains("ticTacO")
-        && xAndODiv[2].firstChild?.classList.contains("ticTacO") ){
+    if(xAndODiv[0].firstChild?.classList?.contains("ticTacO") 
+        && xAndODiv[1].firstChild?.classList?.contains("ticTacO")
+        && xAndODiv[2].firstChild?.classList?.contains("ticTacO") ){
             check(0,1,2);
     }
     
-    if(xAndODiv[3].firstChild?.classList.contains("ticTacO") 
-        && xAndODiv[4].firstChild?.classList.contains("ticTacO")
-        && xAndODiv[5].firstChild?.classList.contains("ticTacO") ){
+    if(xAndODiv[3].firstChild?.classList?.contains("ticTacO") 
+        && xAndODiv[4].firstChild?.classList?.contains("ticTacO")
+        && xAndODiv[5].firstChild?.classList?.contains("ticTacO") ){
             check(3,4,5);
         }
-    if(xAndODiv[6].firstChild?.classList.contains("ticTacO") 
-        && xAndODiv[7].firstChild?.classList.contains("ticTacO")
-         && xAndODiv[8].firstChild?.classList.contains("ticTacO") ){
+    if(xAndODiv[6].firstChild?.classList?.contains("ticTacO") 
+        && xAndODiv[7].firstChild?.classList?.contains("ticTacO")
+         && xAndODiv[8].firstChild?.classList?.contains("ticTacO") ){
             check(6,7,8);
     }
-    if(xAndODiv[0].firstChild?.classList.contains("ticTacO") 
-        && xAndODiv[3].firstChild?.classList.contains("ticTacO")
-        && xAndODiv[6].firstChild?.classList.contains("ticTacO") ){
+    if(xAndODiv[0].firstChild?.classList?.contains("ticTacO") 
+        && xAndODiv[3].firstChild?.classList?.contains("ticTacO")
+        && xAndODiv[6].firstChild?.classList?.contains("ticTacO") ){
             check(0,3,6);
     }
-    if(xAndODiv[1].firstChild?.classList.contains("ticTacO") 
-        && xAndODiv[4].firstChild?.classList.contains("ticTacO")
-        && xAndODiv[7].firstChild?.classList.contains("ticTacO") ){
+    if(xAndODiv[1].firstChild?.classList?.contains("ticTacO") 
+        && xAndODiv[4].firstChild?.classList?.contains("ticTacO")
+        && xAndODiv[7].firstChild?.classList?.contains("ticTacO") ){
             check(1,4,7);
     }         
-    if(xAndODiv[2].firstChild?.classList.contains("ticTacO") 
-        && xAndODiv[5].firstChild?.classList.contains("ticTacO")
-        && xAndODiv[8].firstChild?.classList.contains("ticTacO") ){
+    if(xAndODiv[2].firstChild?.classList?.contains("ticTacO") 
+        && xAndODiv[5].firstChild?.classList?.contains("ticTacO")
+        && xAndODiv[8].firstChild?.classList?.contains("ticTacO") ){
             check(2,5,8);
     } 
-    if(xAndODiv[0].firstChild?.classList.contains("ticTacO") 
-        && xAndODiv[4].firstChild?.classList.contains("ticTacO")
-        && xAndODiv[8].firstChild?.classList.contains("ticTacO") ){
+    if(xAndODiv[0].firstChild?.classList?.contains("ticTacO") 
+        && xAndODiv[4].firstChild?.classList?.contains("ticTacO")
+        && xAndODiv[8].firstChild?.classList?.contains("ticTacO") ){
             check(0,4,8);
     }
-    if(xAndODiv[2].firstChild?.classList.contains("ticTacO") 
-        && xAndODiv[4].firstChild?.classList.contains("ticTacO")
-        && xAndODiv[6].firstChild?.classList.contains("ticTacO") ){
+    if(xAndODiv[2].firstChild?.classList?.contains("ticTacO") 
+        && xAndODiv[4].firstChild?.classList?.contains("ticTacO")
+        && xAndODiv[6].firstChild?.classList?.contains("ticTacO") ){
             check(2,4,6);
     } 
     checkTiedGame();
