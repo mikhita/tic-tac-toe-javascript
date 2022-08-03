@@ -45,6 +45,7 @@ let boxCounter = 0;
 let restrDiv = document.getElementsByClassName("restrDiv")[0];
 let rameErqvas = document.getElementsByTagName("rameErqvas");
 let quitButtons = document.querySelectorAll(".QuitButton");
+let NEXTROUND = document.querySelectorAll(".NEXTROUND");
 let bcf = "";
 
 function displayNoneForLongDivs(){
@@ -55,13 +56,61 @@ function displayNoneForLongDivs(){
     tiedGame.style.display = "none";
 }
 
+NEXTROUND.forEach(function(nextRoundButton){
+    nextRoundButton.addEventListener('click', function(event){
+        for(let i=0; i<parents.length; i++){
+            parents[i].innerHTML = "";
+        }
+        arr = [0,1,2,3,4,5,6,7,8];
+        parents[0].classList.remove("ooo");
+       parents[1].classList.remove("ooo");
+       parents[2].classList.remove("ooo");
+        parents[3].classList.remove("ooo");
+       parents[4].classList.remove("ooo");
+       parents[5].classList.remove("ooo");
+        parents[6].classList.remove("ooo");
+       parents[7].classList.remove("ooo");
+       parents[8].classList.remove("ooo");
+       parents[0].classList.remove("xxx");
+       parents[1].classList.remove("xxx");
+       parents[2].classList.remove("xxx");
+       parents[3].classList.remove("xxx");
+       parents[4].classList.remove("xxx");
+       parents[5].classList.remove("xxx");
+       parents[6].classList.remove("xxx");
+       parents[7].classList.remove("xxx");
+       parents[8].classList.remove("xxx");
+       
+        displayNoneForLongDivs();
+        count=0;
+        checkTiedTruth = false;
+        oTurn.style.display = "none";
+        xTurn.style.display = "block";
+        hoverForDivs();
+        if(gameMode==="CPU" && playerChoise === "O"){
+            autoFillO();
+        }
+        
+
+    })
+
+    
+});
+
 quitButtons.forEach(function(quitButton){
     quitButton.addEventListener ('click', function (event){
-        bcf = 'buttonClick' ; 
-    
-          
+        bcf = 'buttonClick' ;  
+        oTurn.style.display = "none";
+        xTurn.style.display = "block";
         newGAmeDiv.style.display = "flex";
         maindDiv.style.display = "none";
+        counterDivX.innerText = 0;
+        counterDiv.innerText = 0;
+        counterDivXcpu.innerText = 0;
+        counterDivXcp.innerText = 0;
+        counterDivTies.innerText = 0;
+        counterDivTie.innerText = 0;
+        
         for(let i=0; i<parents.length; i++){
             parents[i].innerHTML = "";
         }
@@ -95,9 +144,8 @@ quitButtons.forEach(function(quitButton){
 
 let arr = [0,1,2,3,4,5,6,7,8];
 function findFilledBoxes(number){
- let index = arr.findIndex((element) => element == number)
- arr.splice(index,1);
-//  console.log(arr);
+    let index = arr.findIndex((element) => element == number)
+    arr.splice(index,1);
 }
 
 
@@ -182,8 +230,19 @@ restrDiv.addEventListener('click', function (event) {
     for(let i=0; i<parents.length; i++){
         parents[i].innerHTML = "";
     }
-    arr = [0,1,2,3,4,5,6,7,8]; 
-    
+    arr = [0,1,2,3,4,5,6,7,8];
+    counterDivX.innerText = 0;
+    counterDiv.innerText = 0;
+    counterDivXcpu.innerText = 0;
+    counterDivXcp.innerText = 0;
+    counterDivTies.innerText = 0;
+    counterDivTie.innerText = 0; 
+    oTurn.style.display = "none";
+    xTurn.style.display = "block";
+    hoverForDivs();
+    if(gameMode==="CPU" && playerChoise === "O"){
+        autoFillO();
+    }
     
     
 });
@@ -195,6 +254,9 @@ nGvsCPU.addEventListener('click', function (event) {
     gameMode = "CPU"
     if(playerChoise === 'O' ){
     autoFillO();}
+    xWhite.classList.remove("xWhiteImage");
+    hoverForDivs();
+
       
 });
 
@@ -205,6 +267,9 @@ ngvsPlayer.addEventListener('click', function (event) {
     divNgvsPlayer.style.display = "flex";
     gameMode = "player";
     hoverForDivs();
+    xWhite.classList.remove("xWhiteImage");
+    hoverForDivs();
+
     if(event.target.classList.contains('xAndODiv')){
         if(count%2 == 0){   
             event.target.innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
@@ -232,6 +297,7 @@ oDarkImg.addEventListener('click', function (event) {
     cpuSpan.innerHTML= "(YOU)";
     youSpan.innerHTML= "(CPU)";
     playerChoise = 'O'
+    xWhite.classList.remove("xWhiteImage");
     
 });
 
@@ -241,6 +307,8 @@ xWhite.addEventListener('click', function (event) {
     youSpan.innerHTML= "(You)";
     cpuSpan.innerHTML= "(CPU)"
     playerChoise = 'X';
+    xWhite.classList.add("xWhiteImage");
+
 
 
 });
@@ -248,44 +316,35 @@ xWhite.addEventListener('click', function (event) {
 let count = 0;
 for(let i=0; i<parents.length; i++){
     parents[i].onclick =  function (event) {
-        // console.log(event.target.childNodes);
-        
          if(event.target.childNodes.length !==2 ) {
-
-         
          if(event.target.classList.contains('xAndODiv')){
              if(count%2 == 0){   
-            
-            
-            
              event.target.innerHTML = "<img class='ticTAcX' src='./assets/x for div.png'  />  ";
                 findFilledBoxes(event.target.getAttribute("rameErqvas"));
                 if(gameMode === "CPU" && playerChoise === 'X' && arr.length !== 0){ 
-                 let checkBeforeEnd =   checkwinner();
-                 if(!checkBeforeEnd ){
-                    autoFill();
-                 }
+                    let checkBeforeEnd =   checkwinner();
+                    if(!checkBeforeEnd ){
+                        autoFill();
+                    }
                     
                 }
                 
             } else{
-        //        
-
                 event.target.innerHTML = "<img class='ticTacO' src='./assets/ofordiv.png' />";
                 findFilledBoxes(event.target.getAttribute("rameErqvas"));
                 if(gameMode === "CPU" && playerChoise === 'O' && arr.length !== 0){ 
                     let checkBeforeEnd  =  checkwinner();
-                    if(!checkBeforeEnd){
-                        autoFillO();
-                    }
+                        if(!checkBeforeEnd){
+                            autoFillO();
+                        }
                     
                 }
             }
                  
         }        
-            count++;
-             checkwinner();
-             hoverForDivs();
+        count++;
+        checkwinner();
+        hoverForDivs();
          }
         }
     
@@ -393,17 +452,8 @@ function checkwinnerXPlayer(index1,index2,index3){
 // console.log(parents.length);
 
 function checkTiedGame(){
-    
-    console.log(count);
-    console.log(checkTiedTruth);
-
-    // for(let i=0; i<parents.length; i++){
-    //     if(parents[i]?.innerHTML !== "" ){
-    //         counter++;
-    //     }
-    // }
+   
     if(count === 9 && checkTiedTruth === false ){
-        // console.log(15);
         tiedGame.style.display = "flex";
         incrementWinner("TIE");
     }
